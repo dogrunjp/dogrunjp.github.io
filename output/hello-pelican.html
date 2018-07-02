@@ -36,8 +36,102 @@
         </address>
 <p>In <a href="/category/test.html">Test</a>.</p>
 
-</footer><!-- /.post-info -->      <h2>Test</h2>
-<p>Hello, Pelican!</p>
+</footer><!-- /.post-info -->      <h1>PelicanでGitHub Pagesのブログを作成・管理する方法</h1>
+<p>どこかにコードやサーバの設定手順を残しておく場所が欲しかったため、
+GitHub PageをPelicanで管理することにしました。その手順を最初の記事としてアップしてみます。</p>
+<h2>環境設定</h2>
+<p>今回自分は開発端末にPelican用のローカルリポジトリを作るため、pyenvで専用の環境を作ります。端末はmacOS 10.12です。</p>
+<div class="highlight"><pre><span></span>$ pyenv virtualenv <span class="m">3</span>.5.0 github-page
+$ pyenv <span class="nb">local</span> github-page
+</pre></div>
+
+
+<p>この環境にペリカンに必要な諸々をインストールします。</p>
+<div class="highlight"><pre><span></span>$ pip install pelican
+$ pip install Markdown
+$ pip install typogrify
+$ pip install ghp-import
+</pre></div>
+
+
+<h2>記事の作成</h2>
+<h3>GitHub Page用のレポジトリを作成する</h3>
+<p>GitHubで新規に"githubのアカウント名.github.io"のレポジトリを作成します。</p>
+<p>Pelicanではmasterブランチとpelicanブランチを利用しますが各ブランチの役割は</p>
+<ul>
+<li>pelicanブランチ：記事を作成しmasterブランチにアセットを格納する</li>
+<li>masterブランチ：ここからGitHubに記事をpushする</li>
+</ul>
+<p>のように分けられます。</p>
+<h3>ローカル環境にPelicanを設定する</h3>
+<div class="highlight"><pre><span></span>$ mkdir dogrunjp.github.io <span class="c1"># ローカルのリポジトリ名はなんでも良さそう</span>
+$ <span class="nb">cd</span> ./dogrunjp.github.io
+$ pelican-quickstart
+</pre></div>
+
+
+<p>ここから対話方式の設定が始まります。dogrunjp.github.ioの場合はこんな↓感じ。</p>
+<div class="highlight"><pre><span></span>&gt; Where do you want to create your new web site? [.] 
+&gt; What will be the title of this web site? Inugoya Blog
+&gt; Who will be the author of this web site? oec
+&gt; What will be the default language of this web site? [ja] ja
+&gt; Do you want to specify a URL prefix? e.g., http://example.com   (Y/n) y
+&gt; What is your URL prefix? (see above example; no trailing slash) https://dogrunjp.github.io
+&gt; Do you want to enable article pagination? (Y/n) y
+&gt; How many articles per page do you want? [10] 
+&gt; What is your time zone? [Europe/Paris] Asia/Tokyo
+&gt; Do you want to generate a Fabfile/Makefile to automate generation and publishing? (Y/n) y
+&gt; Do you want an auto-reload &amp; simpleHTTP script to assist with theme and site development? (Y/n) Y
+&gt; Do you want to upload your website using FTP? (y/N) N
+&gt; Do you want to upload your website using SSH? (y/N) N
+&gt; Do you want to upload your website using Dropbox? (y/N) N
+&gt; Do you want to upload your website using S3? (y/N) N
+&gt; Do you want to upload your website using Rackspace Cloud Files? (y/N) N
+&gt; Do you want to upload your website using GitHub Pages? (y/N) y
+&gt; Is this your personal page (username.github.io)? (y/N) y
+</pre></div>
+
+
+<h3>pelicanブランチを作成しブランチを切り替える</h3>
+<div class="highlight"><pre><span></span>$ git init
+$ git remote add origin git@github.com:dogrunjp/dogrunjp.github.io.git
+$ git checkout -b pelican
+</pre></div>
+
+
+<h3>記事を書きmasterブランチに書き出す</h3>
+<div class="highlight"><pre><span></span><span class="err">$</span> <span class="n">vi</span> <span class="n">content</span><span class="o">/</span><span class="n">hello</span><span class="o">.</span><span class="n">md</span>
+<span class="c1"># もちろん何か書く</span>
+
+<span class="err">$</span> <span class="n">pelican</span> <span class="n">content</span> <span class="o">-</span><span class="n">o</span> <span class="n">output</span> <span class="o">-</span><span class="n">s</span> <span class="n">pelicanconf</span><span class="o">.</span><span class="n">py</span>
+<span class="err">$</span> <span class="n">ghp</span><span class="o">-</span><span class="kn">import</span> <span class="nn">output</span> <span class="o">-</span><span class="n">b</span> <span class="n">master</span>
+</pre></div>
+
+
+<h3>pelicanブランチをGitHubにプッシュする</h3>
+<div class="highlight"><pre><span></span>$ git add .
+$ git commit -m <span class="s2">&quot;Initial Commit&quot;</span>
+$ git push origin pelican
+</pre></div>
+
+
+<h3>masterブランチをGitHubにプッシュする</h3>
+<div class="highlight"><pre><span></span>$ git checkout master
+$ git add .
+$ git commit -m <span class="s2">&quot;Publish&quot;</span>
+$ git push origin master
+</pre></div>
+
+
+<h2>追記</h2>
+<p>自分の場合、記事をpushしてからGitHub Pagesに反映されるまで数分かかりました。pushしたのに何故？となるぐらいには時間がかかったことをメモしておきます。</p>
+<h2>参考</h2>
+<p>こちらの記事を参考にさせていただきました。</p>
+<ul>
+<li><a href="https://qiita.com/akimach/items/dfcac164ac5669a6378e">Python製Webサイト生成ツール Pelicanを使ってGithubにブログを公開する</a></li>
+<li><a href="https://bonohu.github.io/hello-world.html">Hello, world! bonohu blog</a></li>
+<li><a href="https://blog.sotm.jp/2014/01/04/Pelican-Markdown-GithubPages-install-guide/">Pelican + Markdown + GitHub Pagesで管理するブログの作り方</a></li>
+</ul>
     </div><!-- /.entry-content -->
 
   </article>
