@@ -2,7 +2,7 @@ Title: D3v4 use categorical scale
 Date: 2018-07-10 18:26
 Category: D3
 
-# D3v4でカテゴリカルなスケールのヒストグラムを書くベストプラクティスはを考えてみた 
+# D3v4でカテゴリカルなスケールのヒストグラムを書くベストプラクティスは何か考えてみた 
 
 最近、[Riotx](https://qiita.com/elastic/items/dfadc8da4cc22bddfb15)をある程度使えるようになった（気がする）
 ので、Riotxを使って複数のコンポーネントに跨ったチャートの状態を同期した拡張版crossfilterのようなものが書けないか検討しています。
