@@ -1,6 +1,6 @@
 Title: Hello, pelican
 Date: 2018-07-01 21:58
-Category: D3.js
+Category: D3
 
 # D3v4でカテゴリカルなスケールのヒストグラムを書くベストプラクティスはを考えてみた 
 
