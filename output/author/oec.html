@@ -67,6 +67,45 @@
   <span class="k">return</span> <span class="nx">ContentService</span><span class="p">.</span><span class="nx">createTextOutput</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
   <span class="p">.</span><span class="nx">setMimeType</span><span class="p">(</span><span class="nx">ContentService</span><span class="p">.</span><span class="nx">MimeType</span><span class="p">.</span><span class="nx">JSON</span><span class="p">);</span>
 <span class="p">}</span>
+</pre></div>
+
+
+<p>次は、取得する行をレンジ指定するAPIを考えてみた。
+pager的に取得するページとページのサイズを引数として渡すと以下のようになる。</p>
+<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">getData</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">sheetName</span><span class="p">,</span> <span class="nx">p</span><span class="p">,</span> <span class="nx">m</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">p</span> <span class="o">||</span> <span class="mi">1</span>
+  <span class="kd">var</span> <span class="nx">retmax</span> <span class="o">=</span> <span class="nx">m</span> <span class="o">||</span> <span class="mi">10</span>
+
+  <span class="c1">// columnのstart,rangeはとりあえず固定とする</span>
+  <span class="kd">var</span> <span class="nx">col_start</span> <span class="o">=</span> <span class="mi">3</span>
+  <span class="kd">var</span> <span class="nx">col_range</span> <span class="o">=</span> <span class="mi">3</span>
+
+  <span class="c1">// 引数のpageは1スタートとする</span>
+  <span class="c1">// getRange()に渡すrow:starting row を計算。header行があるため+2。</span>
+  <span class="kd">var</span> <span class="nx">start</span> <span class="o">=</span> <span class="p">(</span><span class="nx">p</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="nx">retmax</span> <span class="o">+</span> <span class="mi">2</span>
+
+  <span class="kd">var</span> <span class="nx">sheet</span> <span class="o">=</span> <span class="nx">SpreadsheetApp</span><span class="p">.</span><span class="nx">openById</span><span class="p">(</span><span class="nx">id</span><span class="p">).</span><span class="nx">getSheetByName</span><span class="p">(</span><span class="nx">sheetName</span><span class="p">);</span>
+  <span class="c1">// start row, </span>
+  <span class="kd">var</span> <span class="nx">rows</span> <span class="o">=</span> <span class="nx">sheet</span><span class="p">.</span><span class="nx">getRange</span><span class="p">(</span><span class="nx">start</span><span class="p">,</span> <span class="nx">col_start</span><span class="p">,</span> <span class="nx">retmax</span><span class="p">,</span> <span class="nx">col_range</span><span class="p">).</span><span class="nx">getValues</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;col1&quot;</span><span class="p">,</span> <span class="s2">&quot;col2&quot;</span><span class="p">,</span> <span class="s2">&quot;col3&quot;</span><span class="p">]</span>
+
+  <span class="c1">//行の範囲を選択</span>
+  <span class="k">return</span> <span class="nx">rows</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">row</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="nx">row</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">obj</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">index</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">item</span><span class="p">;</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">doGet</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">page</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">parameter</span><span class="p">.</span><span class="nx">page</span>
+  <span class="kd">var</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">parameter</span><span class="p">.</span><span class="nx">max</span>
+  <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">getData</span><span class="p">(</span><span class="s1">&#39;スプレッドシートID&#39;</span><span class="p">,</span> <span class="s1">&#39;ワークシート名&#39;</span><span class="p">,</span> <span class="nx">page</span><span class="p">,</span> <span class="nx">max</span><span class="p">);</span>
+  <span class="k">return</span> <span class="nx">ContentService</span><span class="p">.</span><span class="nx">createTextOutput</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+  <span class="p">.</span><span class="nx">setMimeType</span><span class="p">(</span><span class="nx">ContentService</span><span class="p">.</span><span class="nx">MimeType</span><span class="p">.</span><span class="nx">JSON</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
