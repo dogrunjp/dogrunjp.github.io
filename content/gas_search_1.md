@@ -12,7 +12,6 @@ function getData(id, sheetName, v) {
   var val = v || " "
   var sheet = SpreadsheetApp.openById(id).getSheetByName(sheetName);
   var rows = sheet.getDataRange().getValues();
-  //var keys = rows.splice(0, 1)[0];
   rows.shift()
   var keys = ["id", "title", "date"]
   var l = rows.map(function(row) {
@@ -34,7 +33,8 @@ function getData(id, sheetName, v) {
 }
 
 function doGet(e) {
-  var val = e.parameter.v  //URLパラメータを取得
+  //URLパラメータを取得
+  var val = e.parameter.v  
   var data = getData(スプレッドシートID, ワークシート名, val);
   return ContentService.createTextOutput(JSON.stringify(data, null, 2))
   .setMimeType(ContentService.MimeType.JSON);

@@ -45,7 +45,6 @@
   <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">v</span> <span class="o">||</span> <span class="s2">&quot; &quot;</span>
   <span class="kd">var</span> <span class="nx">sheet</span> <span class="o">=</span> <span class="nx">SpreadsheetApp</span><span class="p">.</span><span class="nx">openById</span><span class="p">(</span><span class="nx">id</span><span class="p">).</span><span class="nx">getSheetByName</span><span class="p">(</span><span class="nx">sheetName</span><span class="p">);</span>
   <span class="kd">var</span> <span class="nx">rows</span> <span class="o">=</span> <span class="nx">sheet</span><span class="p">.</span><span class="nx">getDataRange</span><span class="p">().</span><span class="nx">getValues</span><span class="p">();</span>
-  <span class="c1">//var keys = rows.splice(0, 1)[0];</span>
   <span class="nx">rows</span><span class="p">.</span><span class="nx">shift</span><span class="p">()</span>
   <span class="kd">var</span> <span class="nx">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">]</span>
   <span class="kd">var</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">rows</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">row</span><span class="p">)</span> <span class="p">{</span>
@@ -67,7 +66,8 @@
 <span class="p">}</span>
 
 <span class="kd">function</span> <span class="nx">doGet</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">parameter</span><span class="p">.</span><span class="nx">v</span>  <span class="c1">//URLパラメータを取得</span>
+  <span class="c1">//URLパラメータを取得</span>
+  <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">parameter</span><span class="p">.</span><span class="nx">v</span>  
   <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">getData</span><span class="p">(</span><span class="nx">スプレッドシートID</span><span class="p">,</span> <span class="nx">ワークシート名</span><span class="p">,</span> <span class="nx">val</span><span class="p">);</span>
   <span class="k">return</span> <span class="nx">ContentService</span><span class="p">.</span><span class="nx">createTextOutput</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
   <span class="p">.</span><span class="nx">setMimeType</span><span class="p">(</span><span class="nx">ContentService</span><span class="p">.</span><span class="nx">MimeType</span><span class="p">.</span><span class="nx">JSON</span><span class="p">);</span>
