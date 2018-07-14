@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
         <meta charset="utf-8" />
-        <title>Inugoya Blog</title>
+        <title>Google Apps Script, search with url parameter.</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -15,14 +15,19 @@
                 <h1><a href="/">Inugoya Blog </a></h1>
                 <nav><ul>
                     <li><a href="/category/d3.html">D3</a></li>
-                    <li><a href="/category/js.html">JS</a></li>
+                    <li class="active"><a href="/category/js.html">JS</a></li>
                     <li><a href="/category/test.html">Test</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/google-apps-script-search-with-url-parameter.html" rel="bookmark"
+           title="Permalink to Google Apps Script, search with url parameter.">Google Apps Script, search with url parameter.</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/google-apps-script-search-with-url-parameter.html">Google Apps Script, search with url parameter.</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2018-07-14T17:30:00+09:00">
                 Published: 土 14 7月 2018
@@ -33,7 +38,7 @@
         </address>
 <p>In <a href="/category/js.html">JS</a>.</p>
 
-</footer><!-- /.post-info --><h1>Google Apps Script(GAS)でスプレッドシートを検索する</h1>
+</footer><!-- /.post-info -->      <h1>Google Apps Script(GAS)でスプレッドシートを検索する</h1>
 <p>Googleスプレッドシートの特定のカラムを、URLパラメータを引数に検索して
 マッチしたデータのみJSONで返す様なAPIのサンプル。</p>
 <div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">getData</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">sheetName</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
@@ -67,103 +72,11 @@
   <span class="k">return</span> <span class="nx">ContentService</span><span class="p">.</span><span class="nx">createTextOutput</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
   <span class="p">.</span><span class="nx">setMimeType</span><span class="p">(</span><span class="nx">ContentService</span><span class="p">.</span><span class="nx">MimeType</span><span class="p">.</span><span class="nx">JSON</span><span class="p">);</span>
 <span class="p">}</span>
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/d3v4-use-categorical-scale.html" rel="bookmark"
-                           title="Permalink to D3v4 use categorical scale">D3v4 use categorical scale</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2018-07-10T18:26:00+09:00">
-                Published: 火 10 7月 2018
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/oec.html">oec</a>
-        </address>
-<p>In <a href="/category/d3.html">D3</a>.</p>
-
-</footer><!-- /.post-info -->                <h1>D3v4でカテゴリカルなスケールのヒストグラムを書くベストプラクティスは何か考えてみた</h1>
-<p>最近、<a href="https://qiita.com/elastic/items/dfadc8da4cc22bddfb15">Riotx</a>をある程度使えるようになった（気がする）
-ので、Riotxを使って複数のコンポーネントに跨ったチャートの状態を同期した拡張版crossfilterのようなものが書けないか検討しています。</p>
-<p>試しに簡単なサンプルを作って見ようと、d3.histogramを使って書いて見ようとしたのですが、
-d3.scaleOrdinalなデータをhistogramに変換できない。。
-ということで、D3.jsでカテゴリー的スケールのヒストグラムを書く良い方法を検討してみました。</p>
-<h2>オブジェクトの配列を度数に変換する</h2>
-<p>ヒストグラム用のデータを作るなら当たり前の処理ですが、この処理をモジュール的に作っておこうと思います。</p>
-<p><strong>d3category.js</strong></p>
-<div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">d3category</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">count</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">k</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="nx">nestedData</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">nest</span><span class="p">()</span>
-      <span class="p">.</span><span class="nx">key</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">d</span><span class="p">[</span><span class="nx">k</span><span class="p">]})</span>
-      <span class="p">.</span><span class="nx">entries</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-
-    <span class="kr">const</span> <span class="nx">l</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="nx">nestedData</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">d</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-      <span class="kr">const</span> <span class="nx">item</span> <span class="o">=</span> <span class="p">{}</span>
-      <span class="nx">l</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nx">key</span><span class="o">:</span> <span class="nx">d</span><span class="p">.</span><span class="nx">key …</span></pre></div>
-                <a class="readmore" href="/d3v4-use-categorical-scale.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/hello-pelican.html" rel="bookmark"
-                           title="Permalink to Hello, pelican">Hello, pelican</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2018-07-01T21:58:00+09:00">
-                Published: 日 01 7月 2018
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/oec.html">oec</a>
-        </address>
-<p>In <a href="/category/test.html">Test</a>.</p>
-
-</footer><!-- /.post-info -->                <h1>PelicanでGitHub Pagesのブログを作成・管理する方法</h1>
-<p>どこかにコードやサーバの設定手順を残しておく場所が欲しかったため、
-GitHub PageをPelicanで管理することにしました。その手順を最初の記事としてアップしてみます。</p>
-<h2>環境設定</h2>
-<p>今回自分は開発端末にPelican用のローカルリポジトリを作るため、pyenvで専用の環境を作ります。端末はmacOS 10.12です。</p>
-<div class="highlight"><pre><span></span>$ pyenv virtualenv <span class="m">3</span>.5.0 github-page
-$ pyenv <span class="nb">local</span> github-page
 </pre></div>
+    </div><!-- /.entry-content -->
 
-
-<p>この環境にペリカンに必要な諸々をインストールします。</p>
-<div class="highlight"><pre><span></span>$ pip install pelican
-$ pip install Markdown
-$ pip install typogrify
-$ pip install ghp-import
-</pre></div>
-
-
-<h2>記事の作成</h2>
-<h3>GitHub Page用のレポジトリを作成する</h3>
-<p>GitHubで新規に"githubのアカウント名.github.io"のレポジトリを作成します。</p>
-<p>Pelicanではmasterブランチとpelicanブランチを利用しますが各ブランチの役割は</p>
-<ul>
-<li>pelicanブランチ：記事を作成しmasterブランチにアセットを格納する</li>
-<li>masterブランチ：ここからGitHubに記事をpushする</li>
-</ul>
-<p>のように分けられます。</p>
-<h3>ローカル環境にPelicanを設定する …</h3>
-                <a class="readmore" href="/hello-pelican.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>
