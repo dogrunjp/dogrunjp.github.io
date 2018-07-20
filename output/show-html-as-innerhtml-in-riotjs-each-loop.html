@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
         <meta charset="utf-8" />
-        <title>Inugoya Blog - JS</title>
+        <title>Show HTML as innerHTML in Riot.js each loop.</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -19,10 +19,15 @@
                     <li><a href="/category/test.html">Test</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/show-html-as-innerhtml-in-riotjs-each-loop.html" rel="bookmark"
+           title="Permalink to Show HTML as innerHTML in Riot.js each loop.">Show HTML as innerHTML in Riot.js each loop.</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/show-html-as-innerhtml-in-riotjs-each-loop.html">Show HTML as innerHTML in Riot.js each loop.</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2018-07-20T14:38:00+09:00">
                 Published: 金 20 7月 2018
@@ -33,7 +38,7 @@
         </address>
 <p>In <a href="/category/js.html">JS</a>.</p>
 
-</footer><!-- /.post-info --><h1>Riot.jsのeachループの中でデータをHTMLとして出力する方法。</h1>
+</footer><!-- /.post-info -->      <h1>Riot.jsのeachループの中でデータをHTMLとして出力する方法。</h1>
 <p>Riot.jsの{}の値は常にエスケープされるため、例えば数式などで\<sub>タグを
 使った場合、タグはHTMLとして解釈されずそのまま文字列として表示されてしまいます。</p>
 <p>Riotタグの中でHTMLを使いたい場合、色々ググってみた感じ、
@@ -66,48 +71,11 @@ Riotのeachループの中でHTMLを出力しようとした場合やや面倒�
 </pre></div>
 
 
-<p>updateの後、動的にidを振られたDOMにinnerHTMLを渡してHTMLとしてタグを表示することができました。</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+<p>updateの後、動的にidを振られたDOMにinnerHTMLを渡してHTMLとしてタグを表示することができました。</p>
+    </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/google-apps-script-search-with-url-parameter.html" rel="bookmark"
-                           title="Permalink to Google Apps Script, search with url parameter.">Google Apps Script, search with url parameter.</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2018-07-14T17:30:00+09:00">
-                Published: 土 14 7月 2018
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/oec.html">oec</a>
-        </address>
-<p>In <a href="/category/js.html">JS</a>.</p>
-
-</footer><!-- /.post-info -->                <h1>Google Apps Script(GAS)でスプレッドシートを検索する</h1>
-<p>Googleスプレッドシートの特定のカラムを、URLパラメータを引数に検索して
-マッチしたデータのみJSONで返す様なAPIのサンプル。</p>
-<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">getData</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">sheetName</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">v</span> <span class="o">||</span> <span class="s2">&quot; &quot;</span>
-  <span class="kd">var</span> <span class="nx">sheet</span> <span class="o">=</span> <span class="nx">SpreadsheetApp</span><span class="p">.</span><span class="nx">openById</span><span class="p">(</span><span class="nx">id</span><span class="p">).</span><span class="nx">getSheetByName</span><span class="p">(</span><span class="nx">sheetName</span><span class="p">);</span>
-  <span class="kd">var</span> <span class="nx">rows</span> <span class="o">=</span> <span class="nx">sheet</span><span class="p">.</span><span class="nx">getDataRange</span><span class="p">().</span><span class="nx">getValues</span><span class="p">();</span>
-  <span class="nx">rows</span><span class="p">.</span><span class="nx">shift</span><span class="p">()</span>
-  <span class="kd">var</span> <span class="nx">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">]</span>
-  <span class="kd">var</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">rows</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">row</span><span class="p">)</span> <span class="p">{</span>
-
-    <span class="c1">//必要なカラムの値だけオブジェクトに渡します。</span>
-    <span class="kd">var</span> <span class="nx">item</span> <span class="o">=</span> <span class="p">[</span><span class="nx">row</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">).</span><span class="nx">slice</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0 …</span></pre></div>
-                <a class="readmore" href="/google-apps-script-search-with-url-parameter.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>

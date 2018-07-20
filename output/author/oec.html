@@ -22,7 +22,64 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/google-apps-script-search-with-url-parameter.html">Google Apps Script, search with url parameter.</a></h1>
+                    <h1 class="entry-title"><a href="/show-html-as-innerhtml-in-riotjs-each-loop.html">Show HTML as innerHTML in Riot.js each loop.</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2018-07-20T14:38:00+09:00">
+                Published: 金 20 7月 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/oec.html">oec</a>
+        </address>
+<p>In <a href="/category/js.html">JS</a>.</p>
+
+</footer><!-- /.post-info --><h1>Riot.jsのeachループの中でデータをHTMLとして出力する方法。</h1>
+<p>Riot.jsの{}の値は常にエスケープされるため、例えば数式などで\<sub>タグを
+使った場合、タグはHTMLとして解釈されずそのまま文字列として表示されてしまいます。</p>
+<p>Riotタグの中でHTMLを使いたい場合、色々ググってみた感じ、
+一派的には<a href="https://qiita.com/zrelyydereva/items/b468e36e03885044c128">innerHTMLとして出力する</a>ようです。</p>
+<p>タグの中で一箇所出力する場合はinnerHTMLをそのまま使えば良いのですが、
+Riotのeachループの中でHTMLを出力しようとした場合やや面倒だったので解決方法をメモしておきます。</p>
+<div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">summary</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
+       <span class="o">&lt;</span><span class="nx">virtual</span> <span class="nx">each</span><span class="o">=</span><span class="s2">&quot;{list}&quot;</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="p">{</span><span class="nx">uid</span><span class="p">}</span> <span class="o">&gt;&lt;</span><span class="err">/div&gt;</span>
+       <span class="o">&lt;</span><span class="err">/virtual&gt;</span>
+    <span class="o">&lt;</span><span class="err">/ul&gt;</span>
+
+    <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+        <span class="nx">fetch</span><span class="p">(</span><span class="nx">何かのAPI</span><span class="p">)</span>
+            <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nx">data</span><span class="p">.</span><span class="nx">json</span><span class="p">()</span>
+            <span class="p">})</span>
+            <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">json</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">list</span> <span class="o">=</span> <span class="nx">json</span><span class="p">;</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">();</span>
+                <span class="k">for</span> <span class="p">(</span><span class="nx">item</span> <span class="k">of</span> <span class="nx">self</span><span class="p">.</span><span class="nx">list</span><span class="p">){</span>
+                    <span class="kd">var</span> <span class="nx">elm</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">item</span><span class="p">[</span><span class="s2">&quot;uid&quot;</span><span class="p">])</span>
+                    <span class="nx">elm</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">item</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
+    <span class="o">&lt;</span><span class="err">/script&gt;</span>
+<span class="o">&lt;</span><span class="err">/summary&gt;</span>
+</pre></div>
+
+
+<p>updateの後、動的にidを振られたDOMにinnerHTMLを渡してHTMLとしてタグを表示することができました。</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/google-apps-script-search-with-url-parameter.html" rel="bookmark"
+                           title="Permalink to Google Apps Script, search with url parameter.">Google Apps Script, search with url parameter.</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2018-07-14T17:30:00+09:00">
                 Published: 土 14 7月 2018
@@ -33,7 +90,7 @@
         </address>
 <p>In <a href="/category/js.html">JS</a>.</p>
 
-</footer><!-- /.post-info --><h1>Google Apps Script(GAS)でスプレッドシートを検索する</h1>
+</footer><!-- /.post-info -->                <h1>Google Apps Script(GAS)でスプレッドシートを検索する</h1>
 <p>Googleスプレッドシートの特定のカラムを、URLパラメータを引数に検索して
 マッチしたデータのみJSONで返す様なAPIのサンプル。</p>
 <div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">getData</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">sheetName</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
@@ -45,73 +102,10 @@
   <span class="kd">var</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">rows</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">row</span><span class="p">)</span> <span class="p">{</span>
 
     <span class="c1">//必要なカラムの値だけオブジェクトに渡します。</span>
-    <span class="kd">var</span> <span class="nx">item</span> <span class="o">=</span> <span class="p">[</span><span class="nx">row</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">).</span><span class="nx">slice</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">row</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="nx">row</span><span class="p">[</span><span class="mi">9</span><span class="p">]]</span> 
-
-    <span class="c1">// title要素を引数で検索し、matchした場合だけobjを返す</span>
-    <span class="k">if</span><span class="p">(</span><span class="nx">item</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">match</span><span class="p">(</span><span class="nx">val</span><span class="p">)</span> <span class="p">){</span>
-      <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{}</span>
-      <span class="nx">item</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">obj</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span>
-      <span class="p">});</span>
-      <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">});</span>
-  <span class="nx">l</span> <span class="o">=</span> <span class="nx">l</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nb">Boolean</span><span class="p">)</span>
-  <span class="k">return</span> <span class="nx">l</span>
-<span class="p">}</span>
-
-<span class="kd">function</span> <span class="nx">doGet</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">//URLパラメータを取得</span>
-  <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">parameter</span><span class="p">.</span><span class="nx">v</span>  
-  <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">getData</span><span class="p">(</span><span class="nx">スプレッドシートID</span><span class="p">,</span> <span class="nx">ワークシート名</span><span class="p">,</span> <span class="nx">val</span><span class="p">);</span>
-  <span class="k">return</span> <span class="nx">ContentService</span><span class="p">.</span><span class="nx">createTextOutput</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-  <span class="p">.</span><span class="nx">setMimeType</span><span class="p">(</span><span class="nx">ContentService</span><span class="p">.</span><span class="nx">MimeType</span><span class="p">.</span><span class="nx">JSON</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p>次は、取得する行をレンジ指定するAPIを考えてみた。
-pager的に取得するページとページのサイズを引数として渡すと以下のようになる。</p>
-<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">getData</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">sheetName</span><span class="p">,</span> <span class="nx">p</span><span class="p">,</span> <span class="nx">m</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">p</span> <span class="o">||</span> <span class="mi">1</span>
-  <span class="kd">var</span> <span class="nx">retmax</span> <span class="o">=</span> <span class="nx">m</span> <span class="o">||</span> <span class="mi">10</span>
-
-  <span class="c1">// columnのstart,rangeはとりあえず固定とする</span>
-  <span class="kd">var</span> <span class="nx">col_start</span> <span class="o">=</span> <span class="mi">3</span>
-  <span class="kd">var</span> <span class="nx">col_range</span> <span class="o">=</span> <span class="mi">3</span>
-
-  <span class="c1">// 引数のpageは1スタートとする</span>
-  <span class="c1">// getRange()に渡すrow:starting row を計算。header行があるため+2。</span>
-  <span class="kd">var</span> <span class="nx">start</span> <span class="o">=</span> <span class="p">(</span><span class="nx">p</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="nx">retmax</span> <span class="o">+</span> <span class="mi">2</span>
-
-  <span class="kd">var</span> <span class="nx">sheet</span> <span class="o">=</span> <span class="nx">SpreadsheetApp</span><span class="p">.</span><span class="nx">openById</span><span class="p">(</span><span class="nx">id</span><span class="p">).</span><span class="nx">getSheetByName</span><span class="p">(</span><span class="nx">sheetName</span><span class="p">);</span>
-  <span class="c1">// start row, </span>
-  <span class="kd">var</span> <span class="nx">rows</span> <span class="o">=</span> <span class="nx">sheet</span><span class="p">.</span><span class="nx">getRange</span><span class="p">(</span><span class="nx">start</span><span class="p">,</span> <span class="nx">col_start</span><span class="p">,</span> <span class="nx">retmax</span><span class="p">,</span> <span class="nx">col_range</span><span class="p">).</span><span class="nx">getValues</span><span class="p">();</span>
-  <span class="kd">var</span> <span class="nx">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;col1&quot;</span><span class="p">,</span> <span class="s2">&quot;col2&quot;</span><span class="p">,</span> <span class="s2">&quot;col3&quot;</span><span class="p">]</span>
-
-  <span class="c1">//行の範囲を選択</span>
-  <span class="k">return</span> <span class="nx">rows</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">row</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="nx">row</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">obj</span><span class="p">[</span><span class="nx">keys</span><span class="p">[</span><span class="nx">index</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">item</span><span class="p">;</span>
-    <span class="p">});</span>
-    <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
-  <span class="p">});</span>
-<span class="p">}</span>
-
-<span class="kd">function</span> <span class="nx">doGet</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">page</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">parameter</span><span class="p">.</span><span class="nx">page</span>
-  <span class="kd">var</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">parameter</span><span class="p">.</span><span class="nx">max</span>
-  <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">getData</span><span class="p">(</span><span class="s1">&#39;スプレッドシートID&#39;</span><span class="p">,</span> <span class="s1">&#39;ワークシート名&#39;</span><span class="p">,</span> <span class="nx">page</span><span class="p">,</span> <span class="nx">max</span><span class="p">);</span>
-  <span class="k">return</span> <span class="nx">ContentService</span><span class="p">.</span><span class="nx">createTextOutput</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-  <span class="p">.</span><span class="nx">setMimeType</span><span class="p">(</span><span class="nx">ContentService</span><span class="p">.</span><span class="nx">MimeType</span><span class="p">.</span><span class="nx">JSON</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+    <span class="kd">var</span> <span class="nx">item</span> <span class="o">=</span> <span class="p">[</span><span class="nx">row</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">).</span><span class="nx">slice</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0 …</span></pre></div>
+                <a class="readmore" href="/google-apps-script-search-with-url-parameter.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
