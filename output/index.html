@@ -16,16 +16,190 @@
                 <nav><ul>
                     <li><a href="/category/d3.html">D3</a></li>
                     <li><a href="/category/js.html">JS</a></li>
+                    <li><a href="/category/julia.html">Julia</a></li>
                     <li><a href="/category/test.html">Test</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/show-html-as-innerhtml-in-riotjs-each-loop.html">Show HTML as innerHTML in Riot.js each loop.</a></h1>
+                    <h1 class="entry-title"><a href="/cellfishingjlwoshi-shitemiru.html">CellFishing.jlを試してみる</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2018-12-12T21:54:00+09:00">
+                Published: Wed 12 December 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/oec.html">oec</a>
+        </address>
+<p>In <a href="/category/julia.html">Julia</a>.</p>
+
+</footer><!-- /.post-info --><h1>CellFishing.jlを試してみる</h1>
+<p>高速に大量の細胞の類似度を解析するツールの<a href="https://github.com/bicycle1885/CellFishing.jl">CellFishing.jl</a>を試してみました。</p>
+<p>CellFishing.jlはJuliaで動くツールなのですが、Juliaを使うのも初めてのため、実行環境からたどたどしく設定していきます。</p>
+<h2>MacにJuliaの環境を作る</h2>
+<p>macOS Sierraだとbrew installでjuliaをインストールできる</p>
+<div class="highlight"><pre><span></span>brew cask install Caskroom/cask/julia
+</pre></div>
+
+
+<p><code>$ julia</code>で対話環境がスタートします。</p>
+<p>対話環境は</p>
+<div class="highlight"><pre><span></span>               <span class="n">_</span>
+   <span class="n">_</span>       <span class="n">_</span> <span class="n">_</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="n">_</span>     <span class="o">|</span>  <span class="n">Documentation</span><span class="o">:</span> <span class="n">https</span><span class="o">://</span><span class="n">docs</span><span class="o">.</span><span class="n">julialang</span><span class="o">.</span><span class="n">org</span>
+  <span class="p">(</span><span class="n">_</span><span class="p">)</span>     <span class="o">|</span> <span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="p">(</span><span class="n">_</span><span class="p">)</span>    <span class="o">|</span>
+   <span class="n">_</span> <span class="n">_</span>   <span class="n">_</span><span class="o">|</span> <span class="o">|</span><span class="n">_</span>  <span class="n">__</span> <span class="n">_</span>   <span class="o">|</span>  <span class="kt">Type</span> <span class="s">&quot;?&quot;</span> <span class="k">for</span> <span class="n">help</span><span class="p">,</span> <span class="s">&quot;]?&quot;</span> <span class="k">for</span> <span class="n">Pkg</span> <span class="n">help</span><span class="o">.</span>
+  <span class="o">|</span> <span class="o">|</span> <span class="o">|</span> <span class="o">|</span> <span class="o">|</span> <span class="o">|</span> <span class="o">|/</span> <span class="n">_</span><span class="sb">` |  |</span>
+<span class="sb">  | | |_| | | | (_| |  |  Version 1.0.2 (2018-11-08)</span>
+<span class="sb"> _/ |\__&#39;_|_|_|\__&#39;_|  |  Official https://julialang.org/ release</span>
+<span class="sb">|__/                   |</span>
+
+<span class="sb">julia&gt; </span>
+</pre></div>
+
+
+<p>こんな感じです。</p>
+<p>CellFishingはJulia 0.7.0以降をサポートしているようです。
+brewでインストールされるJuliaのバージョンは1.0.2（これを書いている時点で）なので、JuliaのバージョンはOKと思われます。</p>
+<h2>CellFishingをインストールする</h2>
+<p>公式のREADMEを見ながらCellFishing.jlをインストールしてみます。</p>
+<p>Juliaをインストールする前に対話環境で"HDF5"と"DocOpt"を対話環境でインストールします。</p>
+<p>※ juliaでHDF5をインストールする前に<code>brew install hdf5</code>する必要があるかもしれません。</p>
+<div class="highlight"><pre><span></span>$ julia
+julia &gt; using Pkg
+julia &gt; Pkg.build<span class="o">(</span><span class="s2">&quot;HDF5&quot;</span><span class="o">)</span>
+julia &gt; Pkg.build<span class="o">(</span><span class="s2">&quot;DocOpt&quot;</span><span class="o">)</span>
+</pre></div>
+
+
+<p>次にCellFishing.jlのインストール。
+これも対話環境でインストールできます。</p>
+<div class="highlight"><pre><span></span>julia &gt; ]
+(v1.0) pkg&gt; add git@github.com:bicycle1885/CellFishing.jl.git
+</pre></div>
+
+
+<p>エラーメッセージがでなければインストール成功とのこと。</p>
+<div class="highlight"><pre><span></span>$ julia -e <span class="s1">&#39;using Pkg; Pkg.test(&quot;CellFishing&quot;)&#39;</span>
+</pre></div>
+
+
+<p>で、ユニットテストできます。</p>
+<h3>コマンドラインインターフェースでCellFishing.jlを試す</h3>
+<p>実際に解析を試すにはデータが必要ですが、<a href="https://bonohu.github.io/cellfishing.html">こちらのブログ</a>を参考に
+loomフォーマットのデータを取得します。</p>
+<div class="highlight"><pre><span></span>$ curl -O http://bimsbstatic.mdc-berlin.de/rajewsky/PSCA/all_sgete_4GU75.loom.gz 
+$ gzip -dc all_sgete_4GU75.loom.gz &gt; Plass2018.dge.loom
+</pre></div>
+
+
+<p>公式のREADMEにあるように、bin/cellfishingスクリプトをこのファイルを使ってコマンドラインインターフェースで呼び出します。</p>
+<div class="highlight"><pre><span></span>$ ./bin/cellfishing build Plass2018.dge.loom
+
+Build a search database from Plass2018.dge.loom.
+  Loading data ―――――――――――― <span class="m">17</span> seconds, <span class="m">22</span> milliseconds
+  Selecting features ―――――― <span class="m">1</span> second, <span class="m">46</span> milliseconds
+  Creating a database ―――――  ** On entry to SLASCLS parameter number  <span class="m">4</span> had an illegal value
+ ** On entry to SLASCLS parameter number  <span class="m">4</span> had an illegal value
+ ** On entry to SLASCLS parameter number  <span class="m">5</span> had an illegal value
+<span class="m">6</span> seconds, <span class="m">637</span> milliseconds
+  Writing the database ―――― <span class="m">779</span> milliseconds
+The serialized database is in Plass2018.dge.loom.cf.
+</pre></div>
+
+
+<p><code>Plass2018.dge.loom.cf</code>ファイルが生成されるのですが、
+"Creating a database ――――― "の行が怪しいような。。</p>
+<p>処理を続けます。</p>
+<div class="highlight"><pre><span></span>$ ./bin/cellfishing search Plass2018.dge.loom.cf Plass2018.dge.loom &gt;neighbors.tsv
+
+  Loading the database ―――― <span class="m">409</span> milliseconds
+  Loading query data ―――――― <span class="m">14</span> seconds, <span class="m">822</span> milliseconds
+  Searching the database ―― ERROR: LoadError: MethodError: no method matching findneighbors<span class="o">(</span>::Int64, ::Array<span class="o">{</span>Float32,2<span class="o">}</span>, ::Array<span class="o">{</span>String,1<span class="o">}</span>, ::CellFishing.CellIndex<span class="p">;</span> <span class="nv">inferparams</span><span class="o">=</span><span class="nb">false</span><span class="o">)</span>
+</pre></div>
+
+
+<p><code>no method matching findneighbors()</code>のように、LoadErrorとMethodErrorが発生し、は実行後に空の<code>neighbors.tsv</code>生成されます。</p>
+<h3>Juliaの対話環境でCellFishing.jlを試す</h3>
+<p>先ずは小さなテスト用のデータ（"test.csv"）を作成して
+Juliaの対話環境からCellFishing.jlを試してみます。</p>
+<p>テスト用のデータはPythonで作ることにしました。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s1">&#39;test.csv&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s2">&quot;A,B,C,D,E,F,G,H,I,J&quot;</span><span class="p">,</span> <span class="n">comments</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>これをJuliaで読み込みます。</p>
+<div class="highlight"><pre><span></span>$ julia
+
+julia&gt; using CellFishing
+julia&gt; using CSV
+julia&gt; <span class="nv">data</span> <span class="o">=</span> CSV.read<span class="o">(</span><span class="s2">&quot;test.csv&quot;</span>, <span class="nv">delim</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="o">)</span>
+
+<span class="m">10</span>×10 DataFrames.DataFrame
+│ Row │ A         │ B         │ C        │ D        │ E         │ F         │ G        │ H         │ I        │ J        │
+│     │ Float64⍰  │ Float64⍰  │ Float64⍰ │ Float64⍰ │ Float64⍰  │ Float64⍰  │ Float64⍰ │ Float64⍰  │ Float64⍰ │ Float64⍰ │
+├─────┼───────────┼───────────┼──────────┼──────────┼───────────┼───────────┼──────────┼───────────┼──────────┼──────────┤
+│ <span class="m">1</span>   │ <span class="m">0</span>.534841  │ <span class="m">0</span>.639309  │ <span class="m">0</span>.951326 │ <span class="m">0</span>.51084  │ <span class="m">0</span>.322408  │ <span class="m">0</span>.523939  │ <span class="m">0</span>.27006  │ <span class="m">0</span>.163017  │ <span class="m">0</span>.434338 │ <span class="m">0</span>.901502 │
+│ <span class="m">2</span>   │ <span class="m">0</span>.0446897 │ <span class="m">0</span>.304389  │ <span class="m">0</span>.75983  │ <span class="m">0</span>.300121 │ <span class="m">0</span>.219402  │ <span class="m">0</span>.56748   │ <span class="m">0</span>.347568 │ <span class="m">0</span>.456145  │ <span class="m">0</span>.227494 │ <span class="m">0</span>.170003 │
+│ <span class="m">3</span>   │ <span class="m">0</span>.91494   │ <span class="m">0</span>.631714  │ <span class="m">0</span>.938954 │ <span class="m">0</span>.580154 │ <span class="m">0</span>.329751  │ <span class="m">0</span>.277192  │ <span class="m">0</span>.749877 │ <span class="m">0</span>.770334  │ <span class="m">0</span>.219486 │ <span class="m">0</span>.290027 │
+│ <span class="m">4</span>   │ <span class="m">0</span>.517408  │ <span class="m">0</span>.764021  │ <span class="m">0</span>.131445 │ <span class="m">0</span>.711081 │ <span class="m">0</span>.0529305 │ <span class="m">0</span>.626505  │ <span class="m">0</span>.522473 │ <span class="m">0</span>.405844  │ <span class="m">0</span>.526721 │ <span class="m">0</span>.298303 │
+│ <span class="m">5</span>   │ <span class="m">0</span>.105178  │ <span class="m">0</span>.981811  │ <span class="m">0</span>.650602 │ <span class="m">0</span>.245692 │ <span class="m">0</span>.59703   │ <span class="m">0</span>.0556564 │ <span class="m">0</span>.659795 │ <span class="m">0</span>.963262  │ <span class="m">0</span>.644763 │ <span class="m">0</span>.880459 │
+│ <span class="m">6</span>   │ <span class="m">0</span>.404249  │ <span class="m">0</span>.240975  │ <span class="m">0</span>.983174 │ <span class="m">0</span>.502272 │ <span class="m">0</span>.606391  │ <span class="m">0</span>.367596  │ <span class="m">0</span>.452079 │ <span class="m">0</span>.257366  │ <span class="m">0</span>.973874 │ <span class="m">0</span>.838456 │
+│ <span class="m">7</span>   │ <span class="m">0</span>.576502  │ <span class="m">0</span>.714612  │ <span class="m">0</span>.414675 │ <span class="m">0</span>.267715 │ <span class="m">0</span>.493334  │ <span class="m">0</span>.400844  │ <span class="m">0</span>.70549  │ <span class="m">0</span>.377676  │ <span class="m">0</span>.299713 │ <span class="m">0</span>.739577 │
+│ <span class="m">8</span>   │ <span class="m">0</span>.370031  │ <span class="m">0</span>.0245976 │ <span class="m">0</span>.629839 │ <span class="m">0</span>.7359   │ <span class="m">0</span>.158023  │ <span class="m">0</span>.27708   │ <span class="m">0</span>.319453 │ <span class="m">0</span>.0474918 │ <span class="m">0</span>.923331 │ <span class="m">0</span>.605994 │
+│ <span class="m">9</span>   │ <span class="m">0</span>.196867  │ <span class="m">0</span>.65604   │ <span class="m">0</span>.821253 │ <span class="m">0</span>.260594 │ <span class="m">0</span>.221491  │ <span class="m">0</span>.737735  │ <span class="m">0</span>.453375 │ <span class="m">0</span>.634916  │ <span class="m">0</span>.477798 │ <span class="m">0</span>.387817 │
+│ <span class="m">10</span>  │ <span class="m">0</span>.304881  │ <span class="m">0</span>.864026  │ <span class="m">0</span>.293561 │ <span class="m">0</span>.210086 │ <span class="m">0</span>.543985  │ <span class="m">0</span>.796436  │ <span class="m">0</span>.222279 │ <span class="m">0</span>.729611  │ <span class="m">0</span>.403505 │ <span class="m">0</span>.678046 │
+
+julia&gt; typeof<span class="o">(</span>data<span class="o">)</span>
+DataFrames.DataFrame
+</pre></div>
+
+
+<p>CSV.read()で生成したデータはJuliaのDataFrame.DataFrameになる模様
+（テーブルの上にも表示されていますが）</p>
+<p>CellFishing.jlの処理に続きます。</p>
+<div class="highlight"><pre><span></span>julia&gt; cellnames = string.(names(data))
+julia&gt; featurenames = [&quot;1&quot;,&quot;2&quot;, &quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;10&quot;]
+julia&gt; counts = Matrix(data[:,:])
+</pre></div>
+
+
+<p>生成したJuliaのDataFrameにはindex nameが含まれません（行番号のみ）。
+とりあえずfeaturenamesには行番号的数字を渡してみます。
+このDataFrameは属性的な文字列を含まないのでcountsにはdata全体を渡して、処理を続けます。</p>
+<div class="highlight"><pre><span></span><span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">features</span> <span class="o">=</span> <span class="nt">CellFishing</span><span class="p">.</span><span class="nc">selectfeatures</span><span class="o">(</span><span class="nt">counts</span><span class="o">,</span> <span class="nt">featurenames</span><span class="o">)</span>
+<span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">database</span> <span class="o">=</span> <span class="nt">CellFishing</span><span class="p">.</span><span class="nc">CellIndex</span><span class="o">(</span><span class="nt">counts</span><span class="o">,</span> <span class="nt">features</span><span class="o">,</span> <span class="nt">metadata</span><span class="o">=</span><span class="nt">cellnames</span><span class="o">)</span>
+<span class="nt">ERROR</span><span class="o">:</span> <span class="nt">MethodError</span><span class="o">:</span> <span class="nt">no</span> <span class="nt">method</span> <span class="nt">matching</span> <span class="nt">CellFishing</span><span class="p">.</span><span class="nc">CellIndex</span><span class="o">(</span><span class="p">::</span><span class="nd">Array</span><span class="p">{</span><span class="err">Union{Missing,</span> <span class="err">Float64</span><span class="p">}</span><span class="o">,</span><span class="nt">2</span><span class="err">}</span><span class="o">,</span> <span class="p">::</span><span class="nd">CellFishing</span><span class="p">.</span><span class="nc">Features</span><span class="o">;</span> <span class="nt">metadata</span><span class="o">=</span><span class="cp">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="s2">&quot;F&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="s2">&quot;J&quot;</span><span class="cp">]</span><span class="o">)</span>
+<span class="nt">Closest</span> <span class="nt">candidates</span> <span class="nt">are</span><span class="o">:</span>
+  <span class="nt">CellFishing</span><span class="p">.</span><span class="nc">CellIndex</span><span class="o">(</span><span class="p">::</span><span class="nd">Any</span><span class="o">,</span> <span class="p">::</span><span class="nd">Any</span><span class="o">,</span> <span class="p">::</span><span class="nd">Any</span><span class="o">,</span> <span class="p">::</span><span class="nd">Any</span><span class="o">,</span> <span class="p">::</span><span class="nd">Any</span><span class="o">)</span> <span class="nt">at</span> <span class="o">/</span><span class="nt">Users</span><span class="o">/</span><span class="nt">oec</span><span class="o">/</span><span class="p">.</span><span class="nc">julia</span><span class="o">/</span><span class="nt">packages</span><span class="o">/</span><span class="nt">CellFishing</span><span class="o">/</span><span class="nt">xKKa0</span><span class="o">/</span><span class="nt">src</span><span class="o">/</span><span class="nt">index</span><span class="p">.</span><span class="nc">jl</span><span class="p">:</span><span class="nd">103</span> <span class="nt">got</span> <span class="nt">unsupported</span> <span class="nt">keyword</span> <span class="nt">argument</span> <span class="s2">&quot;metadata&quot;</span>
+  <span class="nt">CellFishing</span><span class="p">.</span><span class="nc">CellIndex</span><span class="o">(</span><span class="p">::</span><span class="nd">AbstractArray</span><span class="p">{</span><span class="err">#s17,2</span><span class="p">}</span> <span class="nt">where</span> <span class="p">#</span><span class="nn">s17</span><span class="o">&lt;</span><span class="p">:</span><span class="nd">Real</span><span class="o">,</span> <span class="p">::</span><span class="nd">CellFishing</span><span class="p">.</span><span class="nc">Features</span><span class="o">;</span> <span class="nt">metadata</span><span class="o">,</span> <span class="nt">index</span><span class="o">,</span> <span class="nt">keep_counts</span><span class="o">,</span> <span class="nt">normalize</span><span class="o">,</span> <span class="nt">scalefactor</span><span class="o">,</span> <span class="nt">transformer</span><span class="o">,</span> <span class="nt">n_dims</span><span class="o">,</span> <span class="nt">randomize</span><span class="o">,</span> <span class="nt">standardize</span><span class="o">,</span> <span class="nt">n_bits</span><span class="o">,</span> <span class="nt">n_lshashes</span><span class="o">,</span> <span class="nt">superbit</span><span class="o">)</span> <span class="nt">at</span> <span class="o">/</span><span class="nt">Users</span><span class="o">/</span><span class="nt">oec</span><span class="o">/</span><span class="p">.</span><span class="nc">julia</span><span class="o">/</span><span class="nt">packages</span><span class="o">/</span><span class="nt">CellFishing</span><span class="o">/</span><span class="nt">xKKa0</span><span class="o">/</span><span class="nt">src</span><span class="o">/</span><span class="nt">index</span><span class="p">.</span><span class="nc">jl</span><span class="p">:</span><span class="nd">178</span>
+<span class="nt">Stacktrace</span><span class="o">:</span>
+ <span class="cp">[</span><span class="mi">1</span><span class="cp">]</span> <span class="nt">top-level</span> <span class="nt">scope</span> <span class="nt">at</span> <span class="nt">none</span><span class="p">:</span><span class="nd">0</span>
+</pre></div>
+
+
+<p>MethodErrorに。。no method matching CellFishin.CellIndex() とのこと。</p>
+<p>この処理に渡すcsv・arrayが妥当かどうかがまず妖しいところなので、
+テスト用のデータをCellFishing.jlgithubに置いていただけたりすると
+ありがたいかもしれません。</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/show-html-as-innerhtml-in-riotjs-each-loop.html" rel="bookmark"
+                           title="Permalink to Show HTML as innerHTML in Riot.js each loop.">Show HTML as innerHTML in Riot.js each loop.</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2018-07-20T14:38:00+09:00">
-                Published: 金 20 7月 2018
+                Published: Fri 20 July 2018
         </abbr>
 
         <address class="vcard author">
@@ -33,7 +207,7 @@
         </address>
 <p>In <a href="/category/js.html">JS</a>.</p>
 
-</footer><!-- /.post-info --><h1>Riot.jsのeachループの中でデータをHTMLとして出力する方法。</h1>
+</footer><!-- /.post-info -->                <h1>Riot.jsのeachループの中でデータをHTMLとして出力する方法。</h1>
 <p>Riot.jsの{}の値は常にエスケープされるため、例えば数式などで<code>&lt;sub&gt;</code>タグを
 使った場合、タグはHTMLとして解釈されずそのまま文字列として表示されてしまいます。</p>
 <p>Riotタグの中でHTMLを使いたい場合、色々ググってみた感じ、
@@ -55,23 +229,10 @@ Riotのeachループの中でHTMLを出力しようとした場合やや面倒�
             <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">json</span><span class="p">)</span> <span class="p">{</span>
                 <span class="k">this</span><span class="p">.</span><span class="nx">list</span> <span class="o">=</span> <span class="nx">json</span><span class="p">;</span>
                 <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">();</span>
-                <span class="k">for</span> <span class="p">(</span><span class="nx">item</span> <span class="k">of</span> <span class="nx">self</span><span class="p">.</span><span class="nx">list</span><span class="p">){</span>
-                    <span class="kd">var</span> <span class="nx">elm</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">item</span><span class="p">[</span><span class="s2">&quot;uid&quot;</span><span class="p">])</span>
-                    <span class="nx">elm</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">item</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
-    <span class="o">&lt;</span><span class="err">/script&gt;</span>
-<span class="o">&lt;</span><span class="err">/summary&gt;</span>
-</pre></div>
-
-
-<p>updateの後、動的にidを振られたDOMにinnerHTMLを渡してHTMLとしてタグを表示することができました。</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+                <span class="k">for</span> <span class="p">(</span><span class="nx">item</span> <span class="k">of</span> <span class="nx">self</span><span class="p">.</span><span class="nx">list …</span></pre></div>
+                <a class="readmore" href="/show-html-as-innerhtml-in-riotjs-each-loop.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -82,7 +243,7 @@ Riotのeachループの中でHTMLを出力しようとした場合やや面倒�
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2018-07-14T17:30:00+09:00">
-                Published: 土 14 7月 2018
+                Published: Sat 14 July 2018
         </abbr>
 
         <address class="vcard author">
@@ -116,7 +277,7 @@ Riotのeachループの中でHTMLを出力しようとした場合やや面倒�
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2018-07-10T18:26:00+09:00">
-                Published: 火 10 7月 2018
+                Published: Tue 10 July 2018
         </abbr>
 
         <address class="vcard author">
@@ -156,7 +317,7 @@ d3.scaleOrdinalなデータをhistogramに変換できない。。
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2018-07-01T21:58:00+09:00">
-                Published: 日 01 7月 2018
+                Published: Sun 01 July 2018
         </abbr>
 
         <address class="vcard author">

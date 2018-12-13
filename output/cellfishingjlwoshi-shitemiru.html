@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
         <meta charset="utf-8" />
-        <title>Inugoya Blog - oec</title>
+        <title>CellFishing.jlを試してみる</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -16,14 +16,19 @@
                 <nav><ul>
                     <li><a href="/category/d3.html">D3</a></li>
                     <li><a href="/category/js.html">JS</a></li>
-                    <li><a href="/category/julia.html">Julia</a></li>
+                    <li class="active"><a href="/category/julia.html">Julia</a></li>
                     <li><a href="/category/test.html">Test</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/cellfishingjlwoshi-shitemiru.html" rel="bookmark"
+           title="Permalink to CellFishing.jlを試してみる">CellFishing.jlを試してみる</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/cellfishingjlwoshi-shitemiru.html">CellFishing.jlを試してみる</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2018-12-12T21:54:00+09:00">
                 Published: Wed 12 December 2018
@@ -34,7 +39,7 @@
         </address>
 <p>In <a href="/category/julia.html">Julia</a>.</p>
 
-</footer><!-- /.post-info --><h1>CellFishing.jlを試してみる</h1>
+</footer><!-- /.post-info -->      <h1>CellFishing.jlを試してみる</h1>
 <p>高速に大量の細胞の類似度を解析するツールの<a href="https://github.com/bicycle1885/CellFishing.jl">CellFishing.jl</a>を試してみました。</p>
 <p>CellFishing.jlはJuliaで動くツールなのですが、Juliaを使うのも初めてのため、実行環境からたどたどしく設定していきます。</p>
 <h2>MacにJuliaの環境を作る</h2>
@@ -183,181 +188,11 @@ julia&gt; counts = Matrix(data[:,:])
 <p>MethodErrorに。。no method matching CellFishin.CellIndex() とのこと。</p>
 <p>この処理に渡すcsv・arrayが妥当かどうかがまず妖しいところなので、
 テスト用のデータをCellFishing.jlgithubに置いていただけたりすると
-ありがたいかもしれません。</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+ありがたいかもしれません。</p>
+    </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/show-html-as-innerhtml-in-riotjs-each-loop.html" rel="bookmark"
-                           title="Permalink to Show HTML as innerHTML in Riot.js each loop.">Show HTML as innerHTML in Riot.js each loop.</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2018-07-20T14:38:00+09:00">
-                Published: Fri 20 July 2018
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/oec.html">oec</a>
-        </address>
-<p>In <a href="/category/js.html">JS</a>.</p>
-
-</footer><!-- /.post-info -->                <h1>Riot.jsのeachループの中でデータをHTMLとして出力する方法。</h1>
-<p>Riot.jsの{}の値は常にエスケープされるため、例えば数式などで<code>&lt;sub&gt;</code>タグを
-使った場合、タグはHTMLとして解釈されずそのまま文字列として表示されてしまいます。</p>
-<p>Riotタグの中でHTMLを使いたい場合、色々ググってみた感じ、
-一派的には<a href="https://qiita.com/zrelyydereva/items/b468e36e03885044c128">innerHTMLとして出力する</a>ようです。</p>
-<p>タグの中で一箇所出力する場合はinnerHTMLをそのまま使えば良いのですが、
-Riotのeachループの中でHTMLを出力しようとした場合やや面倒だったので解決方法をメモしておきます。</p>
-<div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">summary</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
-       <span class="o">&lt;</span><span class="nx">virtual</span> <span class="nx">each</span><span class="o">=</span><span class="s2">&quot;{list}&quot;</span><span class="o">&gt;</span>
-          <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="p">{</span><span class="nx">uid</span><span class="p">}</span> <span class="o">&gt;&lt;</span><span class="err">/div&gt;</span>
-       <span class="o">&lt;</span><span class="err">/virtual&gt;</span>
-    <span class="o">&lt;</span><span class="err">/ul&gt;</span>
-
-    <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
-        <span class="nx">fetch</span><span class="p">(</span><span class="nx">何かのAPI</span><span class="p">)</span>
-            <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="nx">data</span><span class="p">.</span><span class="nx">json</span><span class="p">()</span>
-            <span class="p">})</span>
-            <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">json</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">this</span><span class="p">.</span><span class="nx">list</span> <span class="o">=</span> <span class="nx">json</span><span class="p">;</span>
-                <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">();</span>
-                <span class="k">for</span> <span class="p">(</span><span class="nx">item</span> <span class="k">of</span> <span class="nx">self</span><span class="p">.</span><span class="nx">list …</span></pre></div>
-                <a class="readmore" href="/show-html-as-innerhtml-in-riotjs-each-loop.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/google-apps-script-search-with-url-parameter.html" rel="bookmark"
-                           title="Permalink to Google Apps Script, search with url parameter.">Google Apps Script, search with url parameter.</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2018-07-14T17:30:00+09:00">
-                Published: Sat 14 July 2018
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/oec.html">oec</a>
-        </address>
-<p>In <a href="/category/js.html">JS</a>.</p>
-
-</footer><!-- /.post-info -->                <h1>Google Apps Script(GAS)でスプレッドシートを検索する</h1>
-<p>Googleスプレッドシートの特定のカラムを、URLパラメータを引数に検索して
-マッチしたデータのみJSONで返す様なAPIのサンプル。</p>
-<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">getData</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">sheetName</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">v</span> <span class="o">||</span> <span class="s2">&quot; &quot;</span>
-  <span class="kd">var</span> <span class="nx">sheet</span> <span class="o">=</span> <span class="nx">SpreadsheetApp</span><span class="p">.</span><span class="nx">openById</span><span class="p">(</span><span class="nx">id</span><span class="p">).</span><span class="nx">getSheetByName</span><span class="p">(</span><span class="nx">sheetName</span><span class="p">);</span>
-  <span class="kd">var</span> <span class="nx">rows</span> <span class="o">=</span> <span class="nx">sheet</span><span class="p">.</span><span class="nx">getDataRange</span><span class="p">().</span><span class="nx">getValues</span><span class="p">();</span>
-  <span class="nx">rows</span><span class="p">.</span><span class="nx">shift</span><span class="p">()</span>
-  <span class="kd">var</span> <span class="nx">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">]</span>
-  <span class="kd">var</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">rows</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">row</span><span class="p">)</span> <span class="p">{</span>
-
-    <span class="c1">//必要なカラムの値だけオブジェクトに渡します。</span>
-    <span class="kd">var</span> <span class="nx">item</span> <span class="o">=</span> <span class="p">[</span><span class="nx">row</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">).</span><span class="nx">slice</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0 …</span></pre></div>
-                <a class="readmore" href="/google-apps-script-search-with-url-parameter.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/d3v4-use-categorical-scale.html" rel="bookmark"
-                           title="Permalink to D3v4 use categorical scale">D3v4 use categorical scale</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2018-07-10T18:26:00+09:00">
-                Published: Tue 10 July 2018
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/oec.html">oec</a>
-        </address>
-<p>In <a href="/category/d3.html">D3</a>.</p>
-
-</footer><!-- /.post-info -->                <h1>D3v4でカテゴリカルなスケールのヒストグラムを書くベストプラクティスは何か考えてみた</h1>
-<p>最近、<a href="https://qiita.com/elastic/items/dfadc8da4cc22bddfb15">Riotx</a>をある程度使えるようになった（気がする）
-ので、Riotxを使って複数のコンポーネントに跨ったチャートの状態を同期した拡張版crossfilterのようなものが書けないか検討しています。</p>
-<p>試しに簡単なサンプルを作って見ようと、d3.histogramを使って書いて見ようとしたのですが、
-d3.scaleOrdinalなデータをhistogramに変換できない。。
-ということで、D3.jsでカテゴリー的スケールのヒストグラムを書く良い方法を検討してみました。</p>
-<h2>オブジェクトの配列を度数に変換する</h2>
-<p>ヒストグラム用のデータを作るなら当たり前の処理ですが、この処理をモジュール的に作っておこうと思います。</p>
-<p><strong>d3category.js</strong></p>
-<div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">d3category</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">count</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">k</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="nx">nestedData</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">nest</span><span class="p">()</span>
-      <span class="p">.</span><span class="nx">key</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">d</span><span class="p">[</span><span class="nx">k</span><span class="p">]})</span>
-      <span class="p">.</span><span class="nx">entries</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-
-    <span class="kr">const</span> <span class="nx">l</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="nx">nestedData</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">d</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-      <span class="kr">const</span> <span class="nx">item</span> <span class="o">=</span> <span class="p">{}</span>
-      <span class="nx">l</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nx">key</span><span class="o">:</span> <span class="nx">d</span><span class="p">.</span><span class="nx">key …</span></pre></div>
-                <a class="readmore" href="/d3v4-use-categorical-scale.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/hello-pelican.html" rel="bookmark"
-                           title="Permalink to Hello, pelican">Hello, pelican</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2018-07-01T21:58:00+09:00">
-                Published: Sun 01 July 2018
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/oec.html">oec</a>
-        </address>
-<p>In <a href="/category/test.html">Test</a>.</p>
-
-</footer><!-- /.post-info -->                <h1>PelicanでGitHub Pagesのブログを作成・管理する方法</h1>
-<p>どこかにコードやサーバの設定手順を残しておく場所が欲しかったため、
-GitHub PageをPelicanで管理することにしました。その手順を最初の記事としてアップしてみます。</p>
-<h2>環境設定</h2>
-<p>今回自分は開発端末にPelican用のローカルリポジトリを作るため、pyenvで専用の環境を作ります。端末はmacOS 10.12です。</p>
-<div class="highlight"><pre><span></span>$ pyenv virtualenv <span class="m">3</span>.5.0 github-page
-$ pyenv <span class="nb">local</span> github-page
-</pre></div>
-
-
-<p>この環境にペリカンに必要な諸々をインストールします。</p>
-<div class="highlight"><pre><span></span>$ pip install pelican
-$ pip install Markdown
-$ pip install typogrify
-$ pip install ghp-import
-</pre></div>
-
-
-<h2>記事の作成</h2>
-<h3>GitHub Page用のレポジトリを作成する</h3>
-<p>GitHubで新規に"githubのアカウント名.github.io"のレポジトリを作成します。</p>
-<p>Pelicanではmasterブランチとpelicanブランチを利用しますが各ブランチの役割は</p>
-<ul>
-<li>pelicanブランチ：記事を作成しmasterブランチにアセットを格納する</li>
-<li>masterブランチ：ここからGitHubに記事をpushする</li>
-</ul>
-<p>のように分けられます。</p>
-<h3>ローカル環境にPelicanを設定する …</h3>
-                <a class="readmore" href="/hello-pelican.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>
