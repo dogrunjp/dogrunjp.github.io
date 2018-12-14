@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
         <meta charset="utf-8" />
-        <title>Inugoya Blog - Julia</title>
+        <title>CellFishing.jlを試してみる(2nd)</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -20,10 +20,15 @@
                     <li><a href="/category/test.html">Test</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/cellfishingjlwoshi-shitemiru2nd.html" rel="bookmark"
+           title="Permalink to CellFishing.jlを試してみる(2nd)">CellFishing.jlを試してみる(2nd)</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/cellfishingjlwoshi-shitemiru2nd.html">CellFishing.jlを試してみる(2nd)</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2018-12-14T11:30:00+09:00">
                 Published: Fri 14 December 2018
@@ -34,7 +39,7 @@
         </address>
 <p>In <a href="/category/julia.html">Julia</a>.</p>
 
-</footer><!-- /.post-info --><p>Githubのmasterブランチが修正されたとのことなので、
+</footer><!-- /.post-info -->      <p>Githubのmasterブランチが修正されたとのことなので、
 前回と同様にコマンドラインインターフェースと対話環境でCellFishing.jlにトライしてみました。</p>
 <h3>コマンドラインインターフェースでPlass2018.dge.loomをCellFishin.jlする</h3>
 <p>先ずは<a href="https://github.com/bicycle1885/CellFishing.jl/blob/master/README.md">公式のREADME</a>と同様に
@@ -162,51 +167,11 @@ ERROR: ArgumentError: invalid n_dims
 <p>コマンドラインインターフェースでも対話型実行環境でも、自作のサンプルデータ（loom or csv）を読み込んでの
 CellFishing.jlは失敗していますが、なんとなく読み込んだファイルのフォーマットの不具合がErrorの原因かも、、とい気はしています。
 CellFishin.jlを実際に利用する際は各種データをloomに変換して使うことになると思うので、
-そのあたりの設定等の情報をもう少しよく読んでまたトライしてみたいと思います。</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+そのあたりの設定等の情報をもう少しよく読んでまたトライしてみたいと思います。</p>
+    </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/cellfishingjlwoshi-shitemiru.html" rel="bookmark"
-                           title="Permalink to CellFishing.jlを試してみる">CellFishing.jlを試してみる</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2018-12-12T21:54:00+09:00">
-                Published: Wed 12 December 2018
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/oec.html">oec</a>
-        </address>
-<p>In <a href="/category/julia.html">Julia</a>.</p>
-
-</footer><!-- /.post-info -->                <h1>CellFishing.jlを試してみる</h1>
-<p>高速に大量の細胞の類似度を解析するツールの<a href="https://github.com/bicycle1885/CellFishing.jl">CellFishing.jl</a>を試してみました。</p>
-<p>CellFishing.jlはJuliaで動くツールなのですが、Juliaを使うのも初めてのため、実行環境からたどたどしく設定していきます。</p>
-<h2>MacにJuliaの環境を作る</h2>
-<p>macOS Sierraだとbrew installでjuliaをインストールできる</p>
-<div class="highlight"><pre><span></span>brew cask install Caskroom/cask/julia
-</pre></div>
-
-
-<p><code>$ julia</code>で対話環境がスタートします。</p>
-<p>対話環境は</p>
-<div class="highlight"><pre><span></span>               <span class="n">_</span>
-   <span class="n">_</span>       <span class="n">_</span> <span class="n">_</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="n">_</span>     <span class="o">|</span>  <span class="n">Documentation</span><span class="o">:</span> <span class="n">https</span><span class="o">://</span><span class="n">docs</span><span class="o">.</span><span class="n">julialang</span><span class="o">.</span><span class="n">org</span>
-  <span class="p">(</span><span class="n">_</span><span class="p">)</span>     <span class="o">|</span> <span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="p">(</span><span class="n">_</span><span class="p">)</span>    <span class="o">|</span>
-   <span class="n">_</span> <span class="n">_</span>   <span class="n">_</span><span class="o">|</span> <span class="o">|</span><span class="n">_</span>  <span class="n">__</span> <span class="n">_</span>   <span class="o">|</span>  <span class="kt">Type</span> <span class="s">&quot;?&quot;</span> <span class="k">for</span> <span class="n">help</span><span class="p">,</span> <span class="s">&quot;]?&quot;</span> <span class="k">for</span> <span class="n">Pkg</span> <span class="n">help</span><span class="o">.</span>
-  <span class="o">|</span> <span class="o">|</span> <span class="o">|</span> <span class="o">|</span> <span class="o">|</span> <span class="o">|</span> <span class="o">|/</span> <span class="n">_ …</span></pre></div>
-                <a class="readmore" href="/cellfishingjlwoshi-shitemiru.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>
