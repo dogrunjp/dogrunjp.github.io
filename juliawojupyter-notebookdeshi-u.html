@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
         <meta charset="utf-8" />
-        <title>Inugoya Blog</title>
+        <title>Juliaをjupyter notebookで使う</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -16,29 +16,50 @@
                 <nav><ul>
                     <li><a href="/category/d3.html">D3</a></li>
                     <li><a href="/category/js.html">JS</a></li>
-                    <li><a href="/category/julia.html">Julia</a></li>
+                    <li class="active"><a href="/category/julia.html">Julia</a></li>
                     <li><a href="/category/test.html">Test</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 <section id="content" class="body">
-<h1>Archives for Inugoya Blog</h1>
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/juliawojupyter-notebookdeshi-u.html" rel="bookmark"
+           title="Permalink to Juliaをjupyter notebookで使う">Juliaをjupyter notebookで使う</a></h1>
+    </header>
 
-<dl>
-    <dt>Fri 14 December 2018</dt>
-    <dd><a href="/juliawojupyter-notebookdeshi-u.html">Juliaをjupyter notebookで使う</a></dd>
-    <dt>Fri 14 December 2018</dt>
-    <dd><a href="/cellfishingjlwoshi-shitemiru2nd.html">CellFishing.jlを試してみる(2nd)</a></dd>
-    <dt>Wed 12 December 2018</dt>
-    <dd><a href="/cellfishingjlwoshi-shitemiru.html">CellFishing.jlを試してみる</a></dd>
-    <dt>Fri 20 July 2018</dt>
-    <dd><a href="/show-html-as-innerhtml-in-riotjs-each-loop.html">Show HTML as innerHTML in Riot.js each loop.</a></dd>
-    <dt>Sat 14 July 2018</dt>
-    <dd><a href="/google-apps-script-search-with-url-parameter.html">Google Apps Script, search with url parameter.</a></dd>
-    <dt>Tue 10 July 2018</dt>
-    <dd><a href="/d3v4-use-categorical-scale.html">D3v4 use categorical scale</a></dd>
-    <dt>Sun 01 July 2018</dt>
-    <dd><a href="/hello-pelican.html">Hello, pelican</a></dd>
-</dl>
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-12-14T21:52:00+09:00">
+                Published: Fri 14 December 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/oec.html">oec</a>
+        </address>
+<p>In <a href="/category/julia.html">Julia</a>.</p>
+
+</footer><!-- /.post-info -->      <p>Juliaはjupyter notebookでも使うことができます。</p>
+<div class="highlight"><pre><span></span>julia&gt; ]
+(v1.0) pkg&gt; add Conda
+(v1.o) pkg&gt; add IJulia
+julia &gt; using IJulia
+</pre></div>
+
+
+<p>Juliaからnotebookを起動するには、</p>
+<div class="highlight"><pre><span></span>julia&gt; using IJulia
+julia&gt; IJulia.notebook()
+</pre></div>
+
+
+<p>ですが、jupyter notebookを起動すると、
+Juliaカーネルを選択できるように追加されるので普通にjupyter notebookを開いてJuliaを選んでも良いかも。</p>
+<p>自分の環境（macOS Sierra、Jupyter notebookはインストール済み）では非常に簡単にJulia kernelをインストールできました。</p>
+<p><a href="https://ystt.hatenablog.com/entry/2018/08/11/141132">参考</a></p>
+    </div><!-- /.entry-content -->
+
+  </article>
 </section>
         <section id="extras" class="body">
                 <div class="blogroll">
