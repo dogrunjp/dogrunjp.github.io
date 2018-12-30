@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
         <meta charset="utf-8" />
-        <title>Inugoya Blog - Data Viz</title>
+        <title>「生命科学データ解析を支える情報技術」予約受付が始まりました</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -20,10 +20,15 @@
                     <li><a href="/category/python.html">Python</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/sheng-ming-ke-xue-detajie-xi-wozhi-eruqing-bao-ji-shu-yu-yue-shou-fu-gashi-marimashita.html" rel="bookmark"
+           title="Permalink to 「生命科学データ解析を支える情報技術」予約受付が始まりました">「生命科学データ解析を支える情報技術」予約受付が始まりました</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/sheng-ming-ke-xue-detajie-xi-wozhi-eruqing-bao-ji-shu-yu-yue-shou-fu-gashi-marimashita.html">「生命科学データ解析を支える情報技術」予約受付が始まりました</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2018-12-30T11:25:00+09:00">
                 Published: Sun 30 December 2018
@@ -34,7 +39,7 @@
         </address>
 <p>In <a href="/category/data-viz.html">Data Viz</a>.</p>
 
-</footer><!-- /.post-info --><h2>データ可視化の章を担当した「生命科学データ解析を支える情報技術」の予約受付がAmazonで始まりました</h2>
+</footer><!-- /.post-info -->      <h2>データ可視化の章を担当した「生命科学データ解析を支える情報技術」の予約受付がAmazonで始まりました</h2>
 <p>仕事も収まり、ほぼ年末の気分になっている人も多いだろうと思うなか、
 データ可視化についての章を自分が担当した書籍の予約受付が始まりました。</p>
 <p>今回の書籍は生命科学データ関連の開発に関わることになった、
@@ -54,54 +59,11 @@
 そんな人達に届いて、開発を俯瞰するアイデアの一つとしてこの本が役に立って欲しいと願っています。</p>
 <p><a href="https://www.amazon.co.jp/dp/4297103192">「生命科学データ解析を支える情報技術」</a> <strong><a href="https://twitter.com/hashtag/IT4BDA?src=hash">#IT4BDA</a></strong></p>
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=kubiwa0e-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4297103192&linkId=14bf88906b54211b2e17aeb7c5f0cfa6&bc1=000000&lt1=_blank&fc1=333333&lc1=0066c0&bg1=ffffff&f=ifr">
-    </iframe>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+    </iframe>
+    </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/d3v4-use-categorical-scale.html" rel="bookmark"
-                           title="Permalink to D3v4 use categorical scale">D3v4 use categorical scale</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2018-07-10T18:26:00+09:00">
-                Published: Tue 10 July 2018
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/oec.html">oec</a>
-        </address>
-<p>In <a href="/category/data-viz.html">Data Viz</a>.</p>
-
-</footer><!-- /.post-info -->                <h1>D3v4でカテゴリカルなスケールのヒストグラムを書くベストプラクティスは何か考えてみた</h1>
-<p>最近、<a href="https://qiita.com/elastic/items/dfadc8da4cc22bddfb15">Riotx</a>をある程度使えるようになった（気がする）
-ので、Riotxを使って複数のコンポーネントに跨ったチャートの状態を同期した拡張版crossfilterのようなものが書けないか検討しています。</p>
-<p>試しに簡単なサンプルを作って見ようと、d3.histogramを使って書いて見ようとしたのですが、
-d3.scaleOrdinalなデータをhistogramに変換できない。。
-ということで、D3.jsでカテゴリー的スケールのヒストグラムを書く良い方法を検討してみました。</p>
-<h2>オブジェクトの配列を度数に変換する</h2>
-<p>ヒストグラム用のデータを作るなら当たり前の処理ですが、この処理をモジュール的に作っておこうと思います。</p>
-<p><strong>d3category.js</strong></p>
-<div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">d3category</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">count</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">k</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="nx">nestedData</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">nest</span><span class="p">()</span>
-      <span class="p">.</span><span class="nx">key</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">d</span><span class="p">[</span><span class="nx">k</span><span class="p">]})</span>
-      <span class="p">.</span><span class="nx">entries</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-
-    <span class="kr">const</span> <span class="nx">l</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="nx">nestedData</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">d</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-      <span class="kr">const</span> <span class="nx">item</span> <span class="o">=</span> <span class="p">{}</span>
-      <span class="nx">l</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nx">key</span><span class="o">:</span> <span class="nx">d</span><span class="p">.</span><span class="nx">key …</span></pre></div>
-                <a class="readmore" href="/d3v4-use-categorical-scale.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>
